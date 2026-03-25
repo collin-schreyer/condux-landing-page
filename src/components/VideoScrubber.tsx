@@ -76,14 +76,11 @@ export const VideoScrubber = ({ src }: { src: string }) => {
                 {/* Massively Scaled Video Container */}
                 <motion.div
                     style={{ scale: videoScale }}
-                    className="relative w-[100vw] md:w-[95vw] max-w-[2000px] aspect-video flex-shrink-0"
+                    className="relative w-[100vw] h-[60vh] md:h-auto md:w-[95vw] max-w-[2000px] md:aspect-video flex-shrink-0"
                 >
                     {/* Edge fade mask for Light Mode - dissolves cleanly into pure #fafafa (zinc-50) */}
                     <div
-                        className="absolute inset-0 rounded-[4rem] pointer-events-none z-10"
-                        style={{
-                            boxShadow: "inset 0 0 80px 20px #fafafa", // Light mode vignette
-                        }}
+                        className="absolute inset-0 rounded-[2rem] md:rounded-[4rem] pointer-events-none z-10 shadow-[inset_0_0_40px_10px_#fafafa] md:shadow-[inset_0_0_80px_20px_#fafafa]"
                     />
 
                     <video
@@ -93,7 +90,7 @@ export const VideoScrubber = ({ src }: { src: string }) => {
                         playsInline
                         preload="auto"
                         /* mix-blend-multiply maps the dark parts of the video onto the white background beautifully */
-                        className="w-full h-full object-cover mix-blend-normal opacity-100"
+                        className="w-full h-full object-cover mix-blend-normal opacity-100 rounded-[2rem] md:rounded-[4rem]"
                         style={{
                             willChange: 'transform',
                             // Fade corners to transparent so it dissolves into the white bg
