@@ -221,9 +221,14 @@ function App() {
             <span className="font-semibold text-emerald-600">procurement cycle?</span>
           </h2>
           <MagneticButton>
-            <button className="bg-emerald-500 text-white px-10 py-5 rounded-full font-bold hover:bg-emerald-600 transition-colors shadow-[0_10px_40px_rgba(16,185,129,0.3)] border border-emerald-400">
+            <a
+              href="https://dc-tracker-app.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-emerald-500 text-white px-10 py-5 rounded-full font-bold hover:bg-emerald-600 transition-colors shadow-[0_10px_40px_rgba(16,185,129,0.3)] border border-emerald-400"
+            >
               Request Platform Access
-            </button>
+            </a>
           </MagneticButton>
         </div>
       </section>
