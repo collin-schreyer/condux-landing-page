@@ -103,10 +103,15 @@ function App() {
               className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
             >
               <MagneticButton>
-                <button className="bg-zinc-900 text-white px-8 py-4 rounded-full font-semibold hover:bg-zinc-800 active:scale-95 transition-all flex items-center gap-2 group shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2)] hover:shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] duration-500">
+                <a
+                  href="https://dc-tracker-app.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-zinc-900 text-white px-8 py-4 rounded-full font-semibold hover:bg-zinc-800 active:scale-95 transition-all flex items-center gap-2 group shadow-[0_10px_30px_-10px_rgba(0,0,0,0.2)] hover:shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] duration-500"
+                >
                   Access Intelligence
                   <div className="w-2 h-2 rounded-full bg-emerald-400 group-hover:scale-150 transition-transform" />
-                </button>
+                </a>
               </MagneticButton>
               <button className="px-8 py-4 rounded-full font-semibold text-zinc-500 hover:text-zinc-900 transition-colors relative overflow-hidden group">
                 <span className="relative z-10">View Architecture</span>
