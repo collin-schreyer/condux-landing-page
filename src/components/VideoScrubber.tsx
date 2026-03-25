@@ -22,8 +22,23 @@ export const VideoScrubber = ({ src }: { src: string }) => {
         const video = videoRef.current;
         if (!video) return;
 
-        // Ensure the video is explicitly paused so we can manually scrub
-        video.pause();
+        // iOS Safari Deep Hack: Force decoder initialization
+        // iOS WebKit will literally refuse to paint new frames via `currentTime` tracking unless 
+        // it believes the video has legitimately started "playing" at least once.
+        const initIOS = () => {
+            const p = video.play();
+            if (p !== undefined) {
+                p.then(() => {
+                    video.pause();
+                }).catch(() => { });
+            }
+        };
+
+        // Attempt automatic unlock
+        initIOS();
+        // Safety net: If iOS Low Power Mode blocks auto-play, trigger the unlock on the very first screen touch!
+        window.addEventListener('touchstart', initIOS, { once: true });
+
         video.playbackRate = 1;
 
         let debounceFrame: number;
@@ -45,6 +60,7 @@ export const VideoScrubber = ({ src }: { src: string }) => {
 
         return () => {
             video.removeEventListener('loadedmetadata', onLoadedMetadata);
+            window.removeEventListener('touchstart', initIOS);
             unsub();
             if (debounceFrame) cancelAnimationFrame(debounceFrame);
         };
@@ -85,19 +101,22 @@ export const VideoScrubber = ({ src }: { src: string }) => {
 
                     <video
                         ref={videoRef}
-                        src={src.replace('.mp4', '_scrub.mp4')}
                         muted
                         playsInline
+                        autoPlay
                         preload="auto"
-                        /* mix-blend-multiply maps the dark parts of the video onto the white background beautifully */
+                        /* mix-blend-normal maps the dark parts of the video onto the white background beautifully */
                         className="w-full h-full object-cover mix-blend-normal opacity-100 rounded-[2rem] md:rounded-[4rem]"
                         style={{
                             willChange: 'transform',
+                            transform: 'translateZ(0)', // Force 3D hardware acceleration for iOS
                             // Fade corners to transparent so it dissolves into the white bg
                             maskImage: 'radial-gradient(ellipse at center, black 75%, transparent 98%)',
                             WebkitMaskImage: 'radial-gradient(ellipse at center, black 75%, transparent 98%)'
                         }}
-                    />
+                    >
+                        <source src={src.replace('.mp4', '_scrub.mp4')} type="video/mp4" />
+                    </video>
                 </motion.div>
 
             </div>
